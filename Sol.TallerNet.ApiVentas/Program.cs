@@ -1,4 +1,9 @@
+using Sol.TallerNet.ApiVentas.Repositories.Operations;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Add dependencies
+builder.Services.AddTransient<IArticuloRepository, ArticuloRepository>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -32,6 +37,13 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+
+app.MapGet("/articulo", (IArticuloRepository articuloRepository) =>
+{
+    return Results.Ok(articuloRepository.List());
+
+});
 
 app.Run();
 
