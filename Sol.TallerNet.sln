@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sol.TallerNet.ApiVentas", "Sol.TallerNet.ApiVentas\Sol.TallerNet.ApiVentas.csproj", "{DBDA751E-B9D0-4BD3-9A56-0B3B8FB0DCD8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBDA751E-B9D0-4BD3-9A56-0B3B8FB0DCD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBDA751E-B9D0-4BD3-9A56-0B3B8FB0DCD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBDA751E-B9D0-4BD3-9A56-0B3B8FB0DCD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBDA751E-B9D0-4BD3-9A56-0B3B8FB0DCD8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6C507C70-5803-4DC2-BC3D-2DE10610132A}
+	EndGlobalSection
+EndGlobal
