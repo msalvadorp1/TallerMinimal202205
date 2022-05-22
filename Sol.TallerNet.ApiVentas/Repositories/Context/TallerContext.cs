@@ -14,6 +14,8 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ArticuloConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
+
             //modelBuilder.Entity<Articulo>().HasKey(t => t.IdArticulo);
             base.OnModelCreating(modelBuilder);
         }
@@ -26,5 +28,6 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Context
         }
 
         public DbSet<Articulo> Articulo { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
     }
 }

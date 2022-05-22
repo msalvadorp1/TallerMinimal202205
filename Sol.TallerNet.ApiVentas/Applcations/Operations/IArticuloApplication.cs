@@ -1,4 +1,4 @@
-﻿namespace Sol.TallerNet.ApiVentas.Applcations
+﻿namespace Sol.TallerNet.ApiVentas.Applcations.Operations
 {
     public interface IArticuloApplication
     {
