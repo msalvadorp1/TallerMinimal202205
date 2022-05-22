@@ -1,10 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using Sol.TallerNet.ApiVentas.Applcations;
+using Sol.TallerNet.ApiVentas.Repositories.Context;
 using Sol.TallerNet.ApiVentas.Repositories.Operations;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddDbContext<TallerContext>(opt => {
+
+    opt.UseSqlServer("Data Source=.;Initial Catalog=TallerNet;Integrated Security=True");
+});
+
 //Add dependencies
 builder.Services.AddTransient<IArticuloRepository, ArticuloRepository>();
-
+builder.Services.AddTransient<IArticuloApplication, ArticuloApplication>();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -39,8 +48,9 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast");
 
 
-app.MapGet("/articulo", (IArticuloRepository articuloRepository) =>
+app.MapGet("/articulo", (IArticuloRepository articuloRepository, IArticuloApplication articuloApplication) =>
 {
+    string algo = articuloApplication.Get();
     return Results.Ok(articuloRepository.List());
 
 });

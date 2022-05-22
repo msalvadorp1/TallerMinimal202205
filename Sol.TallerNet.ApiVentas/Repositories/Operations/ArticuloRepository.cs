@@ -1,9 +1,16 @@
-﻿using Sol.TallerNet.ApiVentas.Repositories.Entities;
+﻿using Sol.TallerNet.ApiVentas.Repositories.Context;
+using Sol.TallerNet.ApiVentas.Repositories.Entities;
 
 namespace Sol.TallerNet.ApiVentas.Repositories.Operations
 {
     public class ArticuloRepository : IArticuloRepository
     {
+        private readonly TallerContext tallerContext;
+
+        public ArticuloRepository(TallerContext tallerContext)
+        {
+            this.tallerContext = tallerContext;
+        }
         public Articulo Get(int id)
         {
             throw new NotImplementedException();
@@ -16,7 +23,7 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Operations
 
         public List<Articulo> List()
         {
-            throw new NotImplementedException();
+            return tallerContext.Articulo.ToList();
         }
 
         public Articulo Update(Articulo articulo)

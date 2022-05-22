@@ -5,7 +5,9 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Operations
     public class ArticuloRepositoryMemory : IArticuloRepository
     {
         List<Articulo> _articuloList;
-        public ArticuloRepositoryMemory()
+
+        ILogger<ArticuloRepositoryMemory> _logger;
+        public ArticuloRepositoryMemory(ILogger<ArticuloRepositoryMemory> logger)
         {
             _articuloList = new List<Articulo>
             {
@@ -13,6 +15,8 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Operations
                 new Articulo {IdArticulo = 2, Nombre= "Test2", FechaRegistro = DateTime.Now },
                 new Articulo {IdArticulo =3, Nombre= "Test3", FechaRegistro = DateTime.Now }
             };
+            logger.LogInformation(Guid.NewGuid().ToString());
+            _logger = logger;
         }
         public Articulo Get(int id)
         {
@@ -27,6 +31,7 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Operations
 
         public List<Articulo> List()
         {
+            _logger.LogInformation("Llego aca");
             return _articuloList;
         }
 
