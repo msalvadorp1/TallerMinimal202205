@@ -11,6 +11,8 @@ namespace Sol.TallerNet.ApiVentas.Model.Mappers
             CreateMap<Usuario, UserAutenticaOutput>()
                 .ForMember(dto => dto.Codigo, map => map.MapFrom(source => source.IdUsuario))
                 .ForMember(dto => dto.Credencial, map => map.MapFrom(source => source.Credenciales))
+                .ForMember(dto => dto.Nombre, map => map.MapFrom(source => source.Nombres))
+                .ForMember(dto => dto.Perfil, map => map.MapFrom(source => source.Perfil))
                 ;
         }
     }
