@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 using Sol.TallerNet.ApiVentas.Applcations.Dtos.Input;
 using Sol.TallerNet.ApiVentas.Applcations.Dtos.Output;
 using Sol.TallerNet.ApiVentas.Applcations.Operations;
@@ -38,7 +39,9 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
         public static WebApplication AddOperation(this WebApplication app)
         {
 
-            app.MapGet("/articulo", (IArticuloRepository articuloRepository, IArticuloApplication articuloApplication) =>
+            app.MapGet("/articulo", 
+                [Authorize] 
+                (IArticuloRepository articuloRepository, IArticuloApplication articuloApplication) =>
             {
                 string algo = articuloApplication.Get();
                 return Results.Ok(articuloRepository.List());
