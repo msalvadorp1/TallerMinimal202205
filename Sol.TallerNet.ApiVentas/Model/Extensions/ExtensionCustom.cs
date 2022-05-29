@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
 using Sol.TallerNet.ApiVentas.Applcations.Dtos.Input;
 using Sol.TallerNet.ApiVentas.Applcations.Dtos.Output;
@@ -6,6 +7,7 @@ using Sol.TallerNet.ApiVentas.Applcations.Operations;
 using Sol.TallerNet.ApiVentas.Model.Configs;
 using Sol.TallerNet.ApiVentas.Repositories.Operations;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 
 namespace Sol.TallerNet.ApiVentas.Model.Extensions
@@ -39,9 +41,9 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
         public static WebApplication AddOperation(this WebApplication app)
         {
 
-            app.MapGet("/articulo", 
-                [Authorize] 
-                (IArticuloRepository articuloRepository, 
+            app.MapGet("/articulo",
+                [Authorize]
+            (IArticuloRepository articuloRepository,
                 IArticuloApplication articuloApplication,
                 ILogger<Program> logger) =>
             {
@@ -53,7 +55,7 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
             });
 
 
-            app.MapGet("/usuario", async (IUsuarioRepository usuarioRepository) =>
+            app.MapGet("/usuario", [Authorize]  async (IUsuarioRepository usuarioRepository) =>
             {
 
                 var res = await usuarioRepository.List();
@@ -66,7 +68,7 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
                 return Results.Ok(res);
             });
 
-            app.MapPost("/authv1", async (IConfiguration configuration, IUsuarioApplication usuarioApplition, UserAutenticaInput user) =>
+            app.MapPost("/authv1", [AllowAnonymous] async (IConfiguration configuration, IUsuarioApplication usuarioApplition, UserAutenticaInput user) =>
             {
                 var res = await usuarioApplition.Login(user);
                 if (res == null)
@@ -108,7 +110,8 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
                 //var handler2 = new JwtSecurityTokenHandler();
                 //string token2 = handler2.WriteToken(generador);
 
-                UserAutenticaJwtOutput output = new UserAutenticaJwtOutput { 
+                UserAutenticaJwtOutput output = new UserAutenticaJwtOutput
+                {
                     Codigo = res.Codigo,
                     Token = token1
                 };
@@ -119,9 +122,53 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
 
             return app;
         }
+
+
+        public static WebApplication GestionExcepciones(this WebApplication app)
+        {
+
+            app.UseExceptionHandler(appError =>
+            {
+                appError.Run(async context =>
+                {
+
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.ContentType = "application/json";
+                    var feature = context.Features.Get<IExceptionHandlerFeature>();
+
+                    if (feature != null)
+                    {
+                        await context.Response.WriteAsync(
+                            new ErrorDetails(context.Response.StatusCode, "Error interno de la app").ToString());
+                    }
+                });
+
+
+
+            });
+
+            return app;
+        }
+
+
     }
 
+    public class ErrorDetails
+    {
 
+        public ErrorDetails(int statusCode, string message)
+        {
+            this.StatusCode = statusCode;
+            Message = message;
+        }
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+
+        public override string ToString()
+        {
+            return System.Text.Json.JsonSerializer.Serialize(this);
+        }
+    }
     //public partial class ExtensionCustom { 
 
     //}

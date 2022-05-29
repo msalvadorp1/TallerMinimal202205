@@ -17,6 +17,7 @@ string cnnParam = builder.Configuration.GetValue<string>("ConnectionStrings:BdSq
 string cnnParam2 = builder.Configuration.GetConnectionString("BdSql");
 
 
+
 builder.Host.UseSerilog(
     (HostBuilderContext context, LoggerConfiguration loggerConfiguration) =>
     {
@@ -69,6 +70,41 @@ builder.Services.AddSwaggerGen();
 //Compila Aplicar filtros o configuracion
 var app = builder.Build();
 
+//app.UseExceptionHandler
+
+#region NoUsarMuchoTryCath
+/*
+string numeroTexto = "hola";
+int numer;
+
+if (int.TryParse(numeroTexto, out numer))
+{
+
+}
+else
+{
+
+}
+
+for (int i = 0; i < 100; i++)
+{
+    try
+    {
+        numer = int.Parse(numeroTexto);
+    }
+    catch (Exception)
+    {
+        numer = 0;
+        //throw;
+    }
+}
+*/
+#endregion
+
+
+
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -78,6 +114,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+
+}
+
+app.GestionExcepciones();
 
 app.AddOperation();
 
