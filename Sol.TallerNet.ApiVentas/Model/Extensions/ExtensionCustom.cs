@@ -41,8 +41,12 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
 
             app.MapGet("/articulo", 
                 [Authorize] 
-                (IArticuloRepository articuloRepository, IArticuloApplication articuloApplication) =>
+                (IArticuloRepository articuloRepository, 
+                IArticuloApplication articuloApplication,
+                ILogger<Program> logger) =>
             {
+                logger.LogError("Algo esta muy mal");
+                logger.LogInformation("Por aca paso nuestro metodo");
                 string algo = articuloApplication.Get();
                 return Results.Ok(articuloRepository.List());
 

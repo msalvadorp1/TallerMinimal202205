@@ -1,0 +1,49 @@
+2022-05-29 13:24:47.766 -05:00 [INF] User profile is available. Using 'C:\Users\Miguelon\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-29 13:25:12.509 -05:00 [INF] Now listening on: http://localhost:5266
+2022-05-29 13:25:12.515 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-29 13:25:12.516 -05:00 [INF] Hosting environment: Development
+2022-05-29 13:25:12.517 -05:00 [INF] Content root path: D:\Cursos\Galaxy\NetCoreMinimalAngular13-1\Fuentes\Sol.TallerNet\Sol.TallerNet.ApiVentas\
+2022-05-29 13:25:13.296 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5266/swagger/index.html - -
+2022-05-29 13:25:14.352 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5266/swagger/index.html - - - 200 - text/html;charset=utf-8 1059.5496ms
+2022-05-29 13:25:14.387 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5266/_framework/aspnetcore-browser-refresh.js - -
+2022-05-29 13:25:14.436 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5266/_framework/aspnetcore-browser-refresh.js - - - 200 12016 application/javascript;+charset=utf-8 49.3755ms
+2022-05-29 13:25:14.438 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5266/_vs/browserLink - -
+2022-05-29 13:25:14.489 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5266/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 50.7205ms
+2022-05-29 13:25:14.642 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5266/swagger/v1/swagger.json - -
+2022-05-29 13:25:14.907 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5266/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 264.8236ms
+2022-05-29 13:25:17.006 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5266/articulo - -
+2022-05-29 13:25:17.865 -05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2022-05-29 13:25:17.987 -05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+2022-05-29 13:25:18.001 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2022-05-29 13:25:18.019 -05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2022-05-29 13:25:18.021 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5266/articulo - - - 401 0 - 1014.1048ms
+2022-05-29 13:25:24.032 -05:00 [INF] Request starting HTTP/1.1 POST http://localhost:5266/authv1 application/json 52
+2022-05-29 13:25:24.047 -05:00 [INF] Executing endpoint 'HTTP: POST /authv1'
+2022-05-29 13:25:26.064 -05:00 [WRN] No store type was specified for the decimal property 'Costo' on entity type 'Articulo'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2022-05-29 13:25:26.119 -05:00 [WRN] No store type was specified for the decimal property 'Precio' on entity type 'Articulo'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2022-05-29 13:25:26.354 -05:00 [INF] Entity Framework Core 6.0.5 initialized 'TallerContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.5' with options: None
+2022-05-29 13:25:26.919 -05:00 [INF] Executed DbCommand (55ms) [Parameters=[@__credencial_0='?' (Size = 4000), @__clave_1='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[IdUsuario], [t].[Activo], [t].[CodUsuario], [t].[Fec_Registro], [t].[Nombres], [t].[Clave], [t].[Perfil]
+FROM [Tbl_Usuario] AS [t]
+WHERE ([t].[CodUsuario] = @__credencial_0) AND ([t].[Clave] = @__clave_1)
+2022-05-29 13:25:27.122 -05:00 [INF] Writing value of type 'Sol.TallerNet.ApiVentas.Applcations.Dtos.Output.UserAutenticaJwtOutput' with status code '200'.
+2022-05-29 13:25:27.127 -05:00 [INF] Executed endpoint 'HTTP: POST /authv1'
+2022-05-29 13:25:27.134 -05:00 [INF] Request finished HTTP/1.1 POST http://localhost:5266/authv1 application/json 52 - 200 - application/json;+charset=utf-8 3102.6036ms
+2022-05-29 13:25:42.150 -05:00 [INF] Request starting HTTP/1.1 GET http://localhost:5266/articulo - -
+2022-05-29 13:25:42.190 -05:00 [INF] Executing endpoint 'HTTP: GET /articulo'
+2022-05-29 13:25:42.201 -05:00 [ERR] Algo esta muy mal
+2022-05-29 13:25:42.202 -05:00 [INF] Por aca paso nuestro metodo
+2022-05-29 13:25:42.211 -05:00 [INF] Entity Framework Core 6.0.5 initialized 'TallerContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.5' with options: None
+2022-05-29 13:25:42.250 -05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[IdArticulo], [a].[Costo], [a].[FechaRegistro], [a].[Nombre], [a].[Precio]
+FROM [Articulo] AS [a]
+2022-05-29 13:25:42.284 -05:00 [INF] Writing value of type 'System.Collections.Generic.List`1[[Sol.TallerNet.ApiVentas.Repositories.Entities.Articulo, Sol.TallerNet.ApiVentas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]' with status code '200'.
+2022-05-29 13:25:42.294 -05:00 [INF] Executed endpoint 'HTTP: GET /articulo'
+2022-05-29 13:25:42.296 -05:00 [INF] Request finished HTTP/1.1 GET http://localhost:5266/articulo - - - 200 - application/json;+charset=utf-8 145.4269ms

@@ -8,12 +8,24 @@ using Sol.TallerNet.ApiVentas.Model.Configs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
 string rucParam = builder.Configuration.GetValue<string>("Ruc");
 string cnnParam = builder.Configuration.GetValue<string>("ConnectionStrings:BdSql");
 string cnnParam2 = builder.Configuration.GetConnectionString("BdSql");
 
+
+builder.Host.UseSerilog(
+    (HostBuilderContext context, LoggerConfiguration loggerConfiguration) =>
+    {
+        loggerConfiguration.ReadFrom.Configuration(context.Configuration.GetSection("Logging"));
+
+    });
+
+
+#region Seguridad
 JwtParamConfig jwtParam = new JwtParamConfig();
 builder.Configuration.GetSection("JwtParam").Bind(jwtParam);
 
@@ -24,7 +36,8 @@ var securityKey = new SymmetricSecurityKey(bytes);
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication
     (JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(opt => {
+    .AddJwtBearer(opt =>
+    {
         opt.TokenValidationParameters = new TokenValidationParameters
         {
             ValidIssuer = jwtParam.Issuer,
@@ -36,7 +49,11 @@ builder.Services.AddAuthentication
         };
     });
 
-builder.Services.AddDbContext<TallerContext>(opt => {
+#endregion
+
+
+builder.Services.AddDbContext<TallerContext>(opt =>
+{
 
     opt.UseSqlServer(cnnParam);
 });
@@ -61,9 +78,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
- 
+
 app.AddOperation();
 
 app.Run();
 
- 
