@@ -4,14 +4,22 @@ using Sol.TallerNet.ApiVentas.Repositories.Context;
 using Sol.TallerNet.ApiVentas.Repositories.Operations;
 using Sol.TallerNet.ApiVentas.Model.Extensions;
 using Sol.TallerNet.ApiVentas.Model.Mappers;
+using Sol.TallerNet.ApiVentas.Model.Configs;
 
 var builder = WebApplication.CreateBuilder(args);
 
+string rucParam = builder.Configuration.GetValue<string>("Ruc");
+string cnnParam = builder.Configuration.GetValue<string>("ConnectionStrings:BdSql");
+string cnnParam2 = builder.Configuration.GetConnectionString("BdSql");
+
+JwtParamConfig jwtParam = new JwtParamConfig();
+builder.Configuration.GetSection("JwtParam").Bind(jwtParam);
 
 builder.Services.AddDbContext<TallerContext>(opt => {
 
-    opt.UseSqlServer("Data Source=.;Initial Catalog=TallerNet;Integrated Security=True");
+    opt.UseSqlServer(cnnParam);
 });
+
 
 
 builder.Services.AddInjection();
@@ -20,8 +28,10 @@ builder.Services.AddAutoMapper(typeof(AutoMapperDto));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
- 
+
+//Compila Aplicar filtros o configuracion
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
