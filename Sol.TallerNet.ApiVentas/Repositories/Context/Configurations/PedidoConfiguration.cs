@@ -10,6 +10,11 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Context.Configurations
         {
             builder.HasKey(t => t.IdPedido);
 
+            //relaciones entre entidades
+            builder
+                .HasOne<Usuario>(t => t.Usuario)
+                .WithMany(x => x.Pedido)
+                .HasForeignKey(x => x.CodUsuario);
         }
     }
 }

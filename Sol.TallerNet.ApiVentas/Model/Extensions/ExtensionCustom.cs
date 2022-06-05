@@ -5,6 +5,7 @@ using Sol.TallerNet.ApiVentas.Applcations.Dtos.Input;
 using Sol.TallerNet.ApiVentas.Applcations.Dtos.Output;
 using Sol.TallerNet.ApiVentas.Applcations.Operations;
 using Sol.TallerNet.ApiVentas.Model.Configs;
+using Sol.TallerNet.ApiVentas.Repositories.Entities;
 using Sol.TallerNet.ApiVentas.Repositories.Operations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
@@ -35,6 +36,8 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
             services.AddTransient<IArticuloApplication, ArticuloApplication>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddTransient<IUsuarioApplication, UsuarioApplication>();
+            services.AddTransient<IPedidoRepositorio, PedidoRepository>();
+            services.AddTransient<IPedidoApplication, PedidoApplication>();
             return services;
         }
 
@@ -45,7 +48,10 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
             
             });
 
-            app.MapGet("/pedido/{id}", () => {
+            app.MapGet("/pedido/{id}", async (IPedidoApplication pedidoApplication, int id) => {
+
+                Pedido pedido = await pedidoApplication.PedidoById(id);
+                return Results.Ok(pedido);
 
             });
 

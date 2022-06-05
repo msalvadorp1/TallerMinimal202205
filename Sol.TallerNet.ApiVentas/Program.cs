@@ -116,10 +116,10 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-
+    app.GestionExcepciones();
 }
 
-app.GestionExcepciones();
+
 
 app.AddOperation();
 
