@@ -41,6 +41,14 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
         public static WebApplication AddOperation(this WebApplication app)
         {
 
+            app.MapGet("/pedido", () => { 
+            
+            });
+
+            app.MapGet("/pedido/{id}", () => {
+
+            });
+
             app.MapGet("/articulo",
                 [Authorize]
             (IArticuloRepository articuloRepository,
