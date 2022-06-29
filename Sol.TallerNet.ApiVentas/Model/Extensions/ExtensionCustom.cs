@@ -44,13 +44,18 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
         public static WebApplication AddOperation(this WebApplication app)
         {
 
-            app.MapGet("/pedido", () => { 
-            
+            app.MapGet("/pedido", async (IPedidoApplication pedidoApplication, int nropag, int regxpag, string? filtro) =>
+            {
+
+                PedidoListOutput pedido = await pedidoApplication.PedidoListar(filtro, regxpag, nropag);
+                return Results.Ok(pedido);
+
             });
 
-            app.MapGet("/pedido/{id}", async (IPedidoApplication pedidoApplication, int id) => {
+            app.MapGet("/pedido/{id}", async (IPedidoApplication pedidoApplication, int id) =>
+            {
 
-                Pedido pedido = await pedidoApplication.PedidoById(id);
+                PedidoByIdOutput pedido = await pedidoApplication.PedidoById(id);
                 return Results.Ok(pedido);
 
             });
@@ -68,8 +73,31 @@ namespace Sol.TallerNet.ApiVentas.Model.Extensions
 
             });
 
+            app.MapGet("/articulo/{id}",
+                [Authorize]
+            (IArticuloRepository articuloRepository,
+                ILogger<Program> logger, int id) =>
+                {
+                    return Results.Ok(articuloRepository.Get(id));
+                });
 
-            app.MapGet("/usuario", [Authorize]  async (IUsuarioRepository usuarioRepository) =>
+            app.MapPost("/articulo",
+          [Authorize]
+            (IArticuloRepository articuloRepository,
+          ILogger<Program> logger, Articulo art) =>
+          {
+              return Results.Ok(articuloRepository.Insert(art));
+          });
+
+            app.MapPut("/articulo",
+        [Authorize]
+            (IArticuloRepository articuloRepository,
+        ILogger<Program> logger, Articulo art) =>
+        {
+            return Results.Ok(articuloRepository.Update(art));
+        });
+
+            app.MapGet("/usuario", [Authorize] async (IUsuarioRepository usuarioRepository) =>
             {
 
                 var res = await usuarioRepository.List();

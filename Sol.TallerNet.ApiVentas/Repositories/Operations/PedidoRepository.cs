@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Sol.TallerNet.ApiVentas.Applcations.Dtos.Input;
 using Sol.TallerNet.ApiVentas.Repositories.Context;
 using Sol.TallerNet.ApiVentas.Repositories.Entities;
 
@@ -12,6 +13,8 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Operations
         {
             this.tallerContext = tallerContext;
         }
+
+
 
         public async Task<Pedido> PedidoGet(int id)
         {
@@ -33,18 +36,28 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Operations
                              }).FirstOrDefaultAsync();
 
             var res2 = (tallerContext.Pedido.FromSqlRaw("exec spPedidoPorId " + id.ToString()).ToList());
-            
-            //    await tallerContext.Pedido.Include(t => t.Usuario).FirstOrDefaultAsync(t => t.IdPedido == id);
-
-            //if (pedido != null)
-            //{
-            //    Usuario? usuario = await tallerContext.Usuario.FirstOrDefaultAsync(t => t.IdUsuario == pedido.CodUsuario);
-
-            //    //pedido.NombreUsuario = usuario.Nombres;
-
-            //}
 
             return pedido;
+        }
+
+        public async Task<List<Pedido>> Pedidos(PedidoListInput pedidoListInput)
+        {
+            var list = (from x in tallerContext.Pedido.Include(t => t.Usuario)
+                        select x);
+
+            if (!string.IsNullOrEmpty(pedidoListInput.Filtro))
+            {
+                list = list.Where(t => t.Usuario.Nombres.Contains(pedidoListInput.Filtro));
+            }
+
+            pedidoListInput.TotalReg = list.Count();
+
+            var resultado = await list
+                .Skip(pedidoListInput.NroPag * pedidoListInput.RegXPag)
+                .Take(pedidoListInput.RegXPag)
+                .ToListAsync();
+
+            return resultado;
         }
     }
 }

@@ -6,8 +6,8 @@ namespace Sol.TallerNet.ApiVentas.Applcations.Operations
 {
     public interface IPedidoApplication
     {
-        Task<PedidoListOutput> PedidoListar(PedidoListInput pedidoListInput);
-        Task<Pedido> PedidoById(int id);
+        Task<PedidoListOutput> PedidoListar(string filtro, int regxpag, int nropag);
+        Task<PedidoByIdOutput> PedidoById(int id);
 
     }
 }

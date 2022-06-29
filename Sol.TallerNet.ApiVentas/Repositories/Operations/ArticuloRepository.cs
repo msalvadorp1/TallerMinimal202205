@@ -1,4 +1,5 @@
-﻿using Sol.TallerNet.ApiVentas.Repositories.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Sol.TallerNet.ApiVentas.Repositories.Context;
 using Sol.TallerNet.ApiVentas.Repositories.Entities;
 
 namespace Sol.TallerNet.ApiVentas.Repositories.Operations
@@ -13,12 +14,14 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Operations
         }
         public Articulo Get(int id)
         {
-            throw new NotImplementedException();
+            return tallerContext.Articulo.FirstOrDefault(t => t.IdArticulo == id);
         }
 
         public Articulo Insert(Articulo articulo)
         {
-            throw new NotImplementedException();
+            tallerContext.Add(articulo);
+            tallerContext.SaveChanges();
+            return articulo;
         }
 
         public List<Articulo> List()
@@ -28,7 +31,9 @@ namespace Sol.TallerNet.ApiVentas.Repositories.Operations
 
         public Articulo Update(Articulo articulo)
         {
-            throw new NotImplementedException();
+            tallerContext.Update(articulo);
+            tallerContext.SaveChanges();
+            return articulo;
         }
     }
 }
